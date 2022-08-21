@@ -5,13 +5,15 @@ from toy_robot.constants import TableErrorMessage as TblErrMsg
 from toy_robot.exceptions import TableError
 
 
-class TableBase(ABC):
-    """Abstract Base class for the table (Table Interface)"""
+class Surface(ABC):
+    """Abstract Base class for the table (Surface Interface) For now it's just
+    a table where the robot can be place, but it could be any surface."""
 
     @abstractmethod
     def mark_position(self) -> None:
-        """Lets you mark all the occupied coordinates in the table, Detects
-        potential collision if ever there are multiple robots in a table."""
+        """Lets you mark all the occupied coordinates in the table, Could be
+        use to detect potential collision if ever there are multiple robots in
+        a table."""
 
     @abstractmethod
     def is_target_position_valid(self, x, y) -> None:
@@ -19,7 +21,7 @@ class TableBase(ABC):
         is valid or available in the table."""
 
 
-class Table(TableBase):
+class Table(Surface):
     """Actual Table that allows placement of the Robot."""
 
     def __init__(

@@ -4,7 +4,7 @@ from typing import Optional
 from toy_robot.constants import CommandErrorMessage as CmdErrorMsg
 from toy_robot.exceptions import CommandError
 from toy_robot.models import Position, Direction
-from toy_robot.tables import TableBase
+from toy_robot.tables import Surface
 
 
 class RobotBase(ABC):
@@ -34,9 +34,9 @@ class RobotBase(ABC):
 class Robot(RobotBase):
     """A receiver robot class that performs the commands."""
 
-    def __init__(self, table: TableBase):
+    def __init__(self, surface: Surface):
         self.current_position: Optional[Position] = None
-        self.table = table
+        self.surface = surface
 
     def _validate_command_sequence(func):  # noqa
         """This wrapper function ensures that the command sequence starts from
@@ -51,7 +51,9 @@ class Robot(RobotBase):
         return wrapper
 
     def set_position(self, position: Position):
-        if not self.table.is_target_position_valid(x=position.x, y=position.y):
+        if not self.surface.is_target_position_valid(
+            x=position.x, y=position.y
+        ):
             raise CommandError(msg=CmdErrorMsg.INVALID_POSITION)
         self.current_position = position
 
@@ -83,7 +85,7 @@ class Robot(RobotBase):
             case Direction.WEST:
                 new_x -= 1
 
-        if not self.table.is_target_position_valid(x=new_x, y=new_y):
+        if not self.surface.is_target_position_valid(x=new_x, y=new_y):
             raise CommandError(msg=CmdErrorMsg.INVALID_POSITION)
         self.current_position.x = new_x
         self.current_position.y = new_y

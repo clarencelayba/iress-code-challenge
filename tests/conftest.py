@@ -7,7 +7,7 @@ from toy_robot.tables import Table
 
 @pytest.fixture
 def robot() -> Robot:
-    robot = Robot(table=Table(height=5, width=5))
+    robot = Robot(surface=Table(height=5, width=5))
     return robot
 
 

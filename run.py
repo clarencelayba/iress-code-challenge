@@ -43,8 +43,8 @@ class RobotInvoker:
 if __name__ == "__main__":
     """Creates and invokes the robot that receives the commands."""
 
-    robot = Robot(table=Table(height=5, width=5))
-    print("Welcome to Robot Toy Simulation please enter a valid command: ")
+    robot = Robot(surface=Table(height=5, width=5))
+    print("Welcome to Robot Toy Simulation, Please enter a valid command: ")
     robot_invoker = RobotInvoker(robot_receiver=robot)
     robot_invoker.execute_by_manual_input()
 
